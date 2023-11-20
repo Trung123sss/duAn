@@ -58,10 +58,7 @@ public class MainActivity extends AppCompatActivity {
         String username = thuKho.getHoTen();
         tvUser.setText("Welcome " + username + "!");
 
-        // admin co quyen add user
-//        if (user.equalsIgnoreCase("admin")) {
-//            nv.getMenu().findItem(R.id.sub_AddUser).setVisible(true);
-//        }
+
         Fragment_Hoa_don frhoadon = new Fragment_Hoa_don();
         replaceFrg(frhoadon);
         nv.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {

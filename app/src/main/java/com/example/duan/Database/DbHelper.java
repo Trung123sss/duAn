@@ -8,7 +8,7 @@ import androidx.annotation.Nullable;
 
 public class DbHelper extends SQLiteOpenHelper {
     private static final String DB_NAME = "DTDT";
-    private static final int DB_VERSION = 5;
+    private static final int DB_VERSION = 6;
 
 
     public DbHelper(@Nullable Context context) {
@@ -33,11 +33,18 @@ public class DbHelper extends SQLiteOpenHelper {
                 "matKhau text NOT NULL\n" +
                 ")";
         db.execSQL(CREATE_TABLE_THANH_VIEN);
+        String CREATE_TABLE_LOAI = "create table Loai(" +
+                "maTT INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "tenSanPham TEXT NOT NULL\n "+
+                ")";
+        db.execSQL(CREATE_TABLE_LOAI);
+
         // data mẫu
         db.execSQL("INSERT INTO ThuKho VALUES('admin','Admin','admin')," +
                 "('trung','Đinh Trần Đức Trung','123')");
         db.execSQL("INSERT INTO ThanhVien VALUES(1,'Đoàn Ngọc Mai','2000','makidt','123')," +
                 "(2,'Phạm Thị Hân','2001','han12','123')");
+        db.execSQL("INSERT INTO Loai VALUES(1,'Đồ ăn'),(2,'Quần Áo'),(3,'Điện Tử')");
     }
 
     @Override
@@ -45,9 +52,8 @@ public class DbHelper extends SQLiteOpenHelper {
         if (i != i1) {
             db.execSQL("drop table if exists ThuKho");
             db.execSQL("drop table if exists ThanhVien");
-            db.execSQL("drop table if exists LoaiSach");
-            db.execSQL("drop table if exists Sach");
-            db.execSQL("drop table if exists PhieuMuon");
+            db.execSQL("drop table if exists Loai");
+
             onCreate(db);
         }
     }

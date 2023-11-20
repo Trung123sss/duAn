@@ -2,10 +2,14 @@ package com.example.duan;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.SearchManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -14,6 +18,9 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 
 import com.example.duan.Adapter.ThanhVienAdapter;
@@ -22,6 +29,7 @@ import com.example.duan.DTO.ThanhVien;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Fragment_thanh_vien extends Fragment {
     ListView lvThanhVien;
@@ -33,9 +41,16 @@ public class Fragment_thanh_vien extends Fragment {
     Dialog dialog;
     EditText edMaTV, edTenTV, edNamSinh,edTaiKhoan, edMatKhau;
     Button btnSave, btnCancel;
+    private SearchView searchView;
     public Fragment_thanh_vien() {
         // Required empty public constructor
     }
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -63,6 +78,32 @@ public class Fragment_thanh_vien extends Fragment {
         });
         return v;
     }
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        inflater.inflate(R.menu.drawer_view1, menu);
+        SearchManager searchManager = (SearchManager) getActivity().getSystemService(Context.SEARCH_SERVICE);
+        MenuItem searchItem = menu.findItem(R.id.search);
+        searchView = (SearchView) searchItem.getActionView();
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getActivity().getComponentName()));
+        searchView.setMaxWidth(Integer.MAX_VALUE);
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                handleSearch(newText);
+                return true;
+            }
+        });
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+
 
     void capNhatLv() {
         list = (ArrayList<ThanhVien>) dao.getAll();
@@ -161,7 +202,19 @@ public class Fragment_thanh_vien extends Fragment {
             check = -1;
 
         }
+
         return check;
+
+    }
+    private void handleSearch(String query) {
+        List<ThanhVien> listSearch = new ArrayList<>();
+        for (ThanhVien tv : list) {
+            if (tv.getHoTen().toLowerCase().contains(query.toLowerCase())) {
+                listSearch.add(tv);
+            }
+        }
+        adapter = new ThanhVienAdapter(getActivity(), this, (ArrayList<ThanhVien>) listSearch);
+        lvThanhVien.setAdapter(adapter);
 
     }
 }
