@@ -91,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
                     replaceFrg(frtop);
 
                 } else if (id == R.id.sub_DoanhThu) {
-                    setTitle("Doanh thu");
+                    setTitle("Doanh số");
                     Fragment_doanh_so frdoanhthu = new Fragment_doanh_so();
                     replaceFrg(frdoanhthu);
 
