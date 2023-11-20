@@ -9,7 +9,7 @@
             android:icon="@drawable/ic_catebook"
             android:title="Quản lý Sản Phẩm"/>
         <item android:id="@+id/nav_TheLoai"
-            android:icon="@drawable/ic_books"
+            android:icon="@drawable/th"
             android:title="Quản lý Thể Loại"/>
         <item android:id="@+id/nav_ThanhVien"
             android:icon="@drawable/ic_customer"
@@ -17,7 +17,7 @@
         <item android:title="Thống kê">
             <menu>
                 <item android:id="@+id/sub_Top"
-                    android:icon="@drawable/th"
+                    android:icon="@drawable/ic_top"
                     android:title="Hóa đơn"
                     />
                 <item android:id="@+id/sub_DoanhThu"
