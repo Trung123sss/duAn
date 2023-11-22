@@ -70,7 +70,7 @@ public class Fragment_San_pham extends Fragment {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
     }
-
+//tìm kiếm
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         inflater.inflate(R.menu.drawer_view2, menu);
@@ -169,19 +169,15 @@ public class Fragment_San_pham extends Fragment {
         edMota = dialog.findViewById(R.id.edmoTa);
         btnCancel = dialog.findViewById(R.id.btnCancelSach);
         btnSave = dialog.findViewById(R.id.btnSaveSach);
-
-        listtheLoai = new ArrayList<theLoai>();
         theLoaiDAO = new TheLoaiDAO(context);
         listtheLoai = (ArrayList<theLoai>) theLoaiDAO.getAll();
-
         spinnerAdapter = new TheLoaiSpinner(context, listtheLoai);
         spinner.setAdapter(spinnerAdapter);
-        // lay maLoai
+
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 maTT = listtheLoai.get(position).getMaTT();
-//
             }
 
             @Override
@@ -202,8 +198,8 @@ public class Fragment_San_pham extends Fragment {
                     position = i;
                 }
             Log.i("demo", "posSach " + position);
-            spinner.setSelection(position);
-        }
+
+            spinner.setSelection(position);        }
         btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -260,7 +256,7 @@ public class Fragment_San_pham extends Fragment {
         }
     }
 
-
+//tìm kiến
     private void handleSearch(String query) {
         List<SanPham> listSearch = new ArrayList<>();
         for (SanPham sach : list) {

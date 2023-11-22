@@ -1,20 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://sch emas.android.com/tools"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".fragment_the_loai">
-    <SearchView
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:id="@+id/search_View"
-        />
+    tools:context=".Fragment_hoa_don">
 
     <ListView
-        android:id="@+id/lvLoai"
+        android:id="@+id/lvHoaDon"
         android:layout_width="match_parent"
-        android:layout_marginTop="50dp"
         android:layout_height="match_parent"/>
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
@@ -23,6 +17,5 @@
         android:layout_gravity="bottom|right"
         android:layout_margin="16dp"
         android:src="@drawable/ic_add"
-        app:layout_anchorGravity="bottom|right|end"/>
-
+        />
 </FrameLayout>

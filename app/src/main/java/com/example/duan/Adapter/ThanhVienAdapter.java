@@ -43,12 +43,10 @@ public class ThanhVienAdapter extends ArrayAdapter<ThanhVien> {
         if (item != null) {
             tvMaTV = v.findViewById(R.id.tvMaTV);
             tvMaTV.setText("Mã thành viên: " + item.getMaTV());
-
             tvTenTV = v.findViewById(R.id.tvTenTV);
             tvTenTV.setText("Tên thành viên: " + item.getHoTen());
             tvNamSinh = v.findViewById(R.id.tvNamSinh);
             tvNamSinh.setText("Năm sinh: " + item.getNamSinh());
-
             tvTaiKhoan = v.findViewById(R.id.tvtaiKhoan);
             tvTaiKhoan.setText("Tài Khoản: "+ item.getTaiKhoan());
             tvMatKhau = v.findViewById(R.id.tvmatKhau);
@@ -59,7 +57,7 @@ public class ThanhVienAdapter extends ArrayAdapter<ThanhVien> {
         imgDel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // gọi phương thức xóa
+//xóa
                 fragment.xoa(String.valueOf(item.getMaTV()));
 
             }

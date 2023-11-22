@@ -15,9 +15,14 @@ import java.util.List;
 public class SanPhamDAO {
     private SQLiteDatabase db;
 
+
     public SanPhamDAO(Context context) {
         DbHelper dbHelper = new DbHelper(context);
         db = dbHelper.getWritableDatabase();
+    }
+
+    public SanPhamDAO() {
+
     }
 
     public long insert(SanPham obj) {

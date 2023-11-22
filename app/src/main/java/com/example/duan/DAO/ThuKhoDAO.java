@@ -20,23 +20,11 @@ public class ThuKhoDAO {
         db = dbHelper.getWritableDatabase();
     }
 
-    public long insert(ThuKho obj) {
-        ContentValues values = new ContentValues();
-        values.put("maTT", obj.getMaTT());
-        values.put("hoTen", obj.getHoTen());
-        values.put("matKhau", obj.getMatKhau());
-        return db.insert("ThuKho", null, values);
-    }
-
     public long updatePass(ThuKho obj) {
         ContentValues values = new ContentValues();
         values.put("hoTen", obj.getHoTen());
         values.put("matKhau", obj.getMatKhau());
         return db.update("ThuKho", values, "maTT = ?", new String[]{String.valueOf(obj.getMaTT())});
-    }
-
-    public long delete(String id) {
-        return db.delete("ThuKho", "maTT = ?", new String[]{String.valueOf(id)});
     }
 
     public List<ThuKho> getAll() {

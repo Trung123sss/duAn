@@ -7,34 +7,21 @@
             android:title="Quản lý Hóa Đơn"/>
         <item android:id="@+id/nav_SanPhamh"
             android:icon="@drawable/ic_catebook"
-            android:title="Quản lý Sản Phẩm"/>
+            android:title="Sản Phẩm"/>
         <item android:id="@+id/nav_TheLoai"
             android:icon="@drawable/th"
-            android:title="Quản lý Thể Loại"/>
-        <item android:id="@+id/nav_ThanhVien"
-            android:icon="@drawable/ic_customer"
-            android:title="Quản lý Thành Viên"/>
-        <item android:title="Thống kê">
-            <menu>
-                <item android:id="@+id/sub_Top"
-                    android:icon="@drawable/ic_top"
-                    android:title="Hóa đơn"
-                    />
-                <item android:id="@+id/sub_DoanhThu"
-                    android:icon="@drawable/ic_money"
-                    android:title="Doanh số"
-                    />
-            </menu>
-        </item>
+            android:title="Thể Loại"/>
+
+
 
 
         <item android:title="Người dùng">
             <menu>
 
 
-                <item android:id="@+id/sub_Pass"
+                <item android:id="@+id/sub_In4"
                     android:icon="@drawable/ic_pass"
-                    android:title="Đổi mật khẩu"
+                    android:title="Thông tin cá nhân"
                     />
                 <item android:id="@+id/sub_Logout"
                     android:icon="@drawable/ic_logout"

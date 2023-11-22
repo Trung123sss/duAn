@@ -59,26 +59,26 @@ public class MainActivity extends AppCompatActivity {
         tvUser.setText("Welcome " + username + "!");
 
 
-        Fragment_Hoa_don frhoadon = new Fragment_Hoa_don();
+        Frafment_hoa_don_nv frhoadon = new Frafment_hoa_don_nv();
         replaceFrg(frhoadon);
         nv.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
                 int id = item.getItemId();
-                if (id == R.id.nav_PhieuMuon) {
+                if (id == R.id.nav_Hoadon) {
                     setTitle("Quản lý Hóa Đơn");
                     replaceFrg(frhoadon);
 
                 } else if (id == R.id.nav_SanPhamh) {
                     setTitle("Quản lý Sản Phẩm");
-                    Fragment_San_pham frloaisach = new Fragment_San_pham();
-                    replaceFrg(frloaisach);
+                    Fragment_San_pham frsanpham = new Fragment_San_pham();
+                    replaceFrg(frsanpham);
 
                 } else if (id == R.id.nav_TheLoai) {
                     setTitle("Quản lý Thể loại");
-                    Fragment_The_loai frsach = new Fragment_The_loai();
-                    replaceFrg(frsach);
+                    Fragment_The_loai fragment = new Fragment_The_loai();
+                    replaceFrg(fragment);
 
                 } else if (id == R.id.nav_ThanhVien) {
                     setTitle("Quản lý Thành Viên");
