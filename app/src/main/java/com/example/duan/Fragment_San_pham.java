@@ -70,7 +70,7 @@ public class Fragment_San_pham extends Fragment {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
     }
-
+//tìm kiếm
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         inflater.inflate(R.menu.drawer_view2, menu);
@@ -260,7 +260,7 @@ public class Fragment_San_pham extends Fragment {
         }
     }
 
-
+//tìm kiến
     private void handleSearch(String query) {
         List<SanPham> listSearch = new ArrayList<>();
         for (SanPham sach : list) {

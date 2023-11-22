@@ -48,9 +48,9 @@ public class ThanhVienDAO {
         return getData(sql);
     }
 
-    public ThanhVien getID(String id) {
+    public ThanhVien getID(int id) {
         String sql = "SELECT * FROM ThanhVien WHERE maTV=?";
-        List<ThanhVien> list = getData(sql, id);
+        List<ThanhVien> list = getData(sql, String.valueOf(id));
         return list.get(0);
     }
 
@@ -69,5 +69,14 @@ public class ThanhVienDAO {
             list.add(obj);
         }
         return list;
+    }
+
+    public ThanhVien checkLogin(String id, String password) {
+        String sql = "SELECT * FROM ThanhVien WHERE taiKhoan=? AND matKhau=?";
+        List<ThanhVien> list = getData(sql, id, password);
+        if (list.size() == 0) {
+            return null;
+        }
+        return list.get(0);
     }
 }

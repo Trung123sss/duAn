@@ -12,6 +12,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.duan.DAO.ThanhVienDAO;
 import com.example.duan.DAO.ThuKhoDAO;
 
 public class LoginActivity extends AppCompatActivity {
@@ -19,6 +20,7 @@ public class LoginActivity extends AppCompatActivity {
     Button btnLogin;
     CheckBox chkRememberPass;
     ThuKhoDAO ttdao;
+    ThanhVienDAO tvdao;
     String strUser, strPass;
 
     @Override
@@ -32,6 +34,8 @@ public class LoginActivity extends AppCompatActivity {
 
         chkRememberPass = findViewById(R.id.chkRememberPass);
         ttdao = new ThuKhoDAO(this);
+        tvdao = new ThanhVienDAO(this);
+
         //
         SharedPreferences pref = getSharedPreferences("USER_FILE", MODE_PRIVATE);
         String user = pref.getString("USERNAME", "");
@@ -80,7 +84,17 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(intent);
                 finish();
             } else {
-                Toast.makeText(this, "Tên đăng nhập hoặc mật khẩu không đúng", Toast.LENGTH_SHORT).show();
+                if (tvdao.checkLogin(strUser, strPass) != null) {
+                    Toast.makeText(getApplicationContext(), "Login thành công", Toast.LENGTH_SHORT).show();
+                    rememberUser(strUser, strPass, chkRememberPass.isChecked());
+                    Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+                    intent.putExtra("user", tvdao.checkLogin(strUser, strPass).getMaTV());
+                    startActivity(intent);
+                    finish();
+                }
+                else {
+                    Toast.makeText(getApplicationContext(), "Login thất bại", Toast.LENGTH_SHORT).show();
+                }
             }
         }
 
