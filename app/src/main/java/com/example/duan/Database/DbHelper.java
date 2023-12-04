@@ -8,7 +8,7 @@ import androidx.annotation.Nullable;
 
 public class DbHelper extends SQLiteOpenHelper {
     private static final String DB_NAME = "DTDT";
-    private static final int DB_VERSION = 33;
+    private static final int DB_VERSION = 9;
 
 
     public DbHelper(@Nullable Context context) {
@@ -47,29 +47,15 @@ public class DbHelper extends SQLiteOpenHelper {
                 "moTa TEXT "+
                 ")";
         db.execSQL(CREATE_TABLE_SAN_PHAM);
-        String CREATE_TABLE_HOA_DON = "CREATE TABLE Hoadon(" +
-                "MaHD INTEGER PRIMARY KEY AUTOINCREMENT," +
-                "maTV INTEGER REFERENCES ThanhVien(maTV)," +
-                "ngay TEXT NOT NULL," +
-                "loai TEXT NOT NULL" +
-                ")";
-        db.execSQL(CREATE_TABLE_HOA_DON);
 
-        String CREATE_TABLE_HOA_DON_CHI_TIET = "CREATE TABLE Hoadonchitiet(" +
-                "ID INTEGER REFERENCES Hoadon(MaHD)," +
-                "maSP INTEGER REFERENCES SanPham(maSP)," +
-                "soLuong INTEGER NOT NULL" +
-                ")";
-        db.execSQL(CREATE_TABLE_HOA_DON_CHI_TIET);
         // data mẫu
         db.execSQL("INSERT INTO ThuKho VALUES('admin','Admin','admin')," +
                 "('trung','Đinh Trần Đức Trung','123')");
-        db.execSQL("INSERT INTO ThanhVien VALUES(1,'Nguyễn văn A','2000','admin1','123')," +
-                "(2,'Đinh thị B','2001','admin2','123')");
+        db.execSQL("INSERT INTO ThanhVien VALUES(1,'Đoàn Ngọc Mai','2000','makidt','123')," +
+                "(2,'Phạm Thị Hân','2001','han12','123')");
         db.execSQL("INSERT INTO Loai VALUES(1,'Đồ ăn'),(2,'Quần Áo'),(3,'Điện Tử')");
 
-        db.execSQL("INSERT INTO SanPham VALUES(1,'Iphone',100,'2',2000,'15')");
-
+        db.execSQL("INSERT INTO SanPham VALUES(1,'Ipone',100,'2',2000,'15')");
 
     }
 
@@ -80,8 +66,6 @@ public class DbHelper extends SQLiteOpenHelper {
             db.execSQL("drop table if exists ThanhVien");
             db.execSQL("drop table if exists Loai");
             db.execSQL("drop table if exists SanPham");
-            db.execSQL("drop table if exists Hoadon");
-            db.execSQL("drop table if exists Hoadonchitiet");
 
             onCreate(db);
         }
