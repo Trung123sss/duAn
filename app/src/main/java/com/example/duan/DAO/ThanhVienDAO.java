@@ -10,6 +10,8 @@ import android.util.Log;
 import com.example.duan.DTO.ThanhVien;
 import com.example.duan.Database.DbHelper;
 
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,6 +48,27 @@ public class ThanhVienDAO {
     public List<ThanhVien> getAll() {
         String sql = "SELECT * FROM ThanhVien";
         return getData(sql);
+    }
+    public ThanhVien getIDS(int id) {
+        ThanhVien objNhanVien = new ThanhVien();
+        try {
+            String sql = "SELECT * FROM NhanVien WHERE id = ?";
+            String[] selectionArgs = { String.valueOf(id) };
+
+            Cursor cursor = db.rawQuery(sql, selectionArgs);
+            if (cursor.moveToFirst()) {
+                ThanhVien obj = new ThanhVien();
+                obj.setMaTV(Integer.parseInt(cursor.getString(cursor.getColumnIndex("maTV"))));
+                obj.setHoTen(cursor.getString(cursor.getColumnIndex("hoTen")));
+                obj.setNamSinh(cursor.getString(cursor.getColumnIndex("namSinh")));
+                obj.setTaiKhoan(cursor.getString(cursor.getColumnIndex("taiKhoan")));
+                obj.setMatKhau(cursor.getString(cursor.getColumnIndex("matKhau")));
+            }
+            cursor.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return objNhanVien;
     }
 
     public ThanhVien getID(int id) {
@@ -88,4 +111,13 @@ public class ThanhVienDAO {
         }
         return list.get(0);
     }
+    public ThanhVien checkLogins(String id) {
+        String sql = "SELECT * FROM ThanhVien WHERE taiKhoan=?";
+        List<ThanhVien> list = getData(sql, id);
+        if (list.size() == 0) {
+            return null;
+        }
+        return list.get(0);
+    }
+
 }

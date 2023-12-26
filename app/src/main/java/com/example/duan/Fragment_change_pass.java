@@ -39,6 +39,7 @@ public class Fragment_change_pass extends Fragment {
                 edPassOld.setText("");
                 edPassChange.setText("");
                 edRePassChange.setText("");
+
             }
         });
 
@@ -60,6 +61,7 @@ public class Fragment_change_pass extends Fragment {
                         Toast.makeText(getActivity(), "Thay đổi mật khẩu thất bại", Toast.LENGTH_SHORT).show();
                     }
                 }
+
             }
         });
     return v;

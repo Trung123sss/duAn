@@ -87,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
 
                 } else if (id == R.id.sub_Top) {
                     setTitle("Thông kê hóa đơn");
-                    Fragment_Top frtop = new Fragment_Top();
+                    Fragment_TK frtop = new Fragment_TK();
                     replaceFrg(frtop);
 
                 } else if (id == R.id.sub_DoanhThu) {

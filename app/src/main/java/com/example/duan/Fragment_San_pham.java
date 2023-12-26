@@ -95,8 +95,6 @@ public class Fragment_San_pham extends Fragment {
         });
         super.onCreateOptionsMenu(menu, inflater);
     }
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -111,6 +109,7 @@ public class Fragment_San_pham extends Fragment {
             @Override
             public void onClick(View v) {
                 openDialog(getActivity(), 0);
+
             }
         });
         lvSanPham.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
@@ -204,6 +203,7 @@ public class Fragment_San_pham extends Fragment {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
+
             }
         });
         btnSave.setOnClickListener(new View.OnClickListener() {

@@ -54,7 +54,7 @@ public class Fragment_Hoa_don extends Fragment {
     SanPhamDAO sanPhamDAO;
 
     FloatingActionButton fab;
-    Dialog dialog, dialogThem, diglogmo;
+    Dialog dialog, dialogThem, diglogmo, dialogSL;
     EditText edMaHD, edTenTv, edngay, edSoLuong;
     CheckBox chkXuat, chkNhap;
     Button btnSave, btnThem;
@@ -91,12 +91,14 @@ public class Fragment_Hoa_don extends Fragment {
         View v = inflater.inflate(R.layout.fragment_hoa_don, container, false);
         lvHoaDon = v.findViewById(R.id.lvHoaDon);
         hoaDonDAO = new HoaDonDAO(getActivity());
+        sanPhamDAO = new SanPhamDAO();
         capNhatLv();
         fab = v.findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openDialog(getActivity(), 0,0);
+                openDialog(getActivity(), 0, 0);
+
             }
         });
         lvHoaDon.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -109,13 +111,13 @@ public class Fragment_Hoa_don extends Fragment {
                 int idhd = list.get(position).getMaHD();
                 if (currentTime - lastClickTime < 500) {
                     item = list.get(position);
-                    openDialog(getActivity(), 1,idhd);
+                    openDialog(getActivity(), 1, idhd);
                     count = 0;
                 } else {
                     count++;
                     if (count == 1) {
                         item = list.get(position);
-                        openDialogs(getActivity(), 1,idhd);
+                        openDialogs(getActivity(), 1, idhd);
                     }
                 }
                 lastClickTime = currentTime;
@@ -154,7 +156,7 @@ public class Fragment_Hoa_don extends Fragment {
         builder.show();
     }
 
-    protected void openDialogs(final Context context, final int type,int idhd) {
+    protected void openDialogs(final Context context, final int type, int idhd) {
         diglogmo = new Dialog(context);
         diglogmo.setContentView(R.layout.dialog_hdct);
         listView = diglogmo.findViewById(R.id.lvHoaDons);
@@ -178,11 +180,18 @@ public class Fragment_Hoa_don extends Fragment {
         btnThem = dialog.findViewById(R.id.btnthem);
         hoadonchitietDAO = new HoadonchitietDAO(context);
 
-
+        lvSanPham.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Hoadonchitiet objhoadonchitiet = listHDCT.get(i);
+                openDialogUpdateSL(context, objhoadonchitiet);
+            }
+        });
         btnThem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 opendialogThem(getContext());
+
             }
         });
         listHDCT = new ArrayList<>();
@@ -206,10 +215,9 @@ public class Fragment_Hoa_don extends Fragment {
                         }, year, month, dayOfMonth);
 
                 datePickerDialog.show();
+
             }
         });
-
-        // Kiểm tra loại hành động (insert hoặc update)
         edMaHD.setEnabled(false);
         if (type != 0) {
             edMaHD.setText(String.valueOf(item.getMaHD()));
@@ -244,18 +252,32 @@ public class Fragment_Hoa_don extends Fragment {
                         item.setLoai(chkXuat.getText().toString());
                     }
 
-                    if (type == 0) { // Insert
+                    if (type == 0) {
                         if (hoaDonDAO.insert(item) > 0) {
                             int idNew = hoaDonDAO.idNew();
                             for (Hoadonchitiet hdct : listHDCT) {
+                                String maSP = String.valueOf(hdct.getMaSP());
+                                SanPham sanPham = sanPhamDAO.getID(maSP);
+                                if (chkNhap.isChecked()) {
+                                    sanPham.setSoLuong(sanPham.getSoLuong() + hdct.getSoLuong());
+                                } else if (chkXuat.isChecked()) {
+                                    if (sanPham.getSoLuong() < hdct.getSoLuong()) {
+                                        Toast.makeText(context, "Kho không đủ hảng", Toast.LENGTH_SHORT).show();
+
+                                    } else {
+                                        sanPham.setSoLuong(sanPham.getSoLuong() - hdct.getSoLuong());
+                                    }
+                                }
+                                sanPhamDAO.updateSL(sanPham);
                                 hdct.setID(idNew);
                                 hoadonchitietDAO.insert(hdct);
+
                             }
                             Toast.makeText(context, "Thêm thành công", Toast.LENGTH_SHORT).show();
                         } else {
                             Toast.makeText(context, "Thêm thất bại", Toast.LENGTH_SHORT).show();
                         }
-                    } else { // Update
+                    } else {
                         item.setMaHD(Integer.parseInt(edMaHD.getText().toString()));
                         if (hoaDonDAO.update(item) > 0) {
                             Toast.makeText(context, "Sửa thành công", Toast.LENGTH_SHORT).show();
@@ -267,16 +289,54 @@ public class Fragment_Hoa_don extends Fragment {
                     capNhatLv();
                     dialog.dismiss();
                 }
+
             }
         });
 
         dialog.show();
     }
 
-    protected void opendialogThem(final Context context ) {
+    protected void openDialogUpdateSL(final Context context, Hoadonchitiet objHoaDonChiTiet) {
+        dialogSL = new Dialog(context);
+        dialogSL.setContentView(R.layout.dialog_so_luong);
+        EditText edSoLuong = dialogSL.findViewById(R.id.edSoLuong);
+        Button btnThemMonAn = dialogSL.findViewById(R.id.btnThem);
+        Button btnHuyMonAn = dialogSL.findViewById(R.id.btnHuy);
+        btnHuyMonAn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialogSL.dismiss();
+            }
+        });
+        btnThemMonAn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (edSoLuong.getText().toString().isEmpty()) {
+                    Toast.makeText(context, "Bạn chưa nhập số lượng", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                try {
+                    int gia = Integer.parseInt(edSoLuong.getText().toString());
+                    if (gia < 0) {
+                        Toast.makeText(context, "Số lượng phải lớn hơn 0", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                } catch (Exception e) {
+                    Toast.makeText(context, "Số lượng phải là số", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                objHoaDonChiTiet.setSoLuong(Integer.parseInt(edSoLuong.getText().toString()));
+
+                capNhatLvSanPham();
+                dialogSL.dismiss();
+            }
+        });
+        dialogSL.show();
+    }
+
+    protected void opendialogThem(final Context context) {
         dialogThem = new Dialog(context);
         dialogThem.setContentView(R.layout.dialog_hoadontiet);
-        sanPhamDAO = new SanPhamDAO();
         spSanPham = dialogThem.findViewById(R.id.spLoais);
         edSoLuong = dialogThem.findViewById(R.id.edsoLuongs);
         Button btnThem = dialogThem.findViewById(R.id.btnSaveS);
@@ -303,6 +363,7 @@ public class Fragment_Hoa_don extends Fragment {
             @Override
             public void onClick(View view) {
                 dialogThem.dismiss();
+
             }
         });
 
@@ -310,16 +371,44 @@ public class Fragment_Hoa_don extends Fragment {
         btnThem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Hoadonchitiet objHoaDonChiTiet = new Hoadonchitiet();
-                objHoaDonChiTiet.setMaSP(maSP);
-                objHoaDonChiTiet.setSoLuong(Integer.parseInt(edSoLuong.getText().toString()));
-                listHDCT.add(objHoaDonChiTiet);
-                dialogThem.dismiss();
+                int maSP = ((SanPham) spSanPham.getSelectedItem()).getMaSP();
+                String soLuongStr = edSoLuong.getText().toString();
+                if (soLuongStr.isEmpty()) {
+                    Toast.makeText(context, "Bạn chưa nhập số lượng", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                try {
+                    int gia = Integer.parseInt(soLuongStr.toString());
+                    if (gia < 0) {
+                        Toast.makeText(context, "Số lượng phải lớn hơn 0", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                } catch (Exception e) {
+                    Toast.makeText(context, "Số lượng phải là số", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                int soLuong = Integer.parseInt(soLuongStr);
+                boolean isProductExists = false;
+                for (Hoadonchitiet item : listHDCT) {
+                    if (item.getMaSP() == maSP) {
+                        isProductExists = true;
+                        item.setSoLuong(item.getSoLuong() + soLuong);
+                        break;
+                    }
+                }
+                if (!isProductExists) {
+                    Hoadonchitiet objHoaDonChiTiet = new Hoadonchitiet();
+                    objHoaDonChiTiet.setMaSP(maSP);
+                    objHoaDonChiTiet.setSoLuong(soLuong);
+                    listHDCT.add(objHoaDonChiTiet);
+                }
                 capNhatLvSanPham();
+                dialogThem.dismiss();
             }
         });
         dialogThem.show();
     }
+
 
     public int validate() {
         int check = 1;

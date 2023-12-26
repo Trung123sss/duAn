@@ -1,0 +1,11 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/menu_item_xuat"
+        android:title="Xuat" />
+    <item
+        android:id="@+id/menu_item_ton"
+        android:title="Ton" />
+    <item
+        android:id="@+id/menu_item_nhap"
+        android:title="Nhap" />
+</menu>

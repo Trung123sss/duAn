@@ -47,6 +47,14 @@ public class ThuKhoDAO {
         }
         return 1;
     }
+    public int checkLogins(String id) {
+        String sql = "SELECT * FROM ThuKho WHERE maTT=? ";
+        List<ThuKho> list = getData(sql, id);
+        if (list.size() == 0) {
+            return -1;
+        }
+        return 1;
+    }
 
     @SuppressLint("Range")
     private List<ThuKho> getData(String sql, String... selectionArgs) {

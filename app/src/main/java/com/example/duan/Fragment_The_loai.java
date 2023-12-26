@@ -70,6 +70,7 @@ public class Fragment_The_loai extends Fragment {
             @Override
             public void onClick(View v) {
                 openDialog(getActivity(), 0);
+
             }
         });
 
@@ -141,6 +142,7 @@ public class Fragment_The_loai extends Fragment {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
+
             }
         });
         btnSave.setOnClickListener(new View.OnClickListener() {

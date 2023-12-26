@@ -44,6 +44,11 @@ public class SanPhamDAO {
         values.put("moTa", obj.getMoTa());
         return db.update("SanPham", values, "maSP = ?", new String[]{String.valueOf(obj.getMaSP())});
     }
+   public long updateSL(SanPham obj ){
+        ContentValues values = new ContentValues();
+        values.put("soLuong", obj.getSoLuong());
+        return db.update("SanPham", values, "maSP = ?", new String[]{String.valueOf(obj.getMaSP())});
+   }
 
     public long delete(String id) {
         return db.delete("SanPham", "maSP = ?", new String[]{String.valueOf(id)});
@@ -56,8 +61,11 @@ public class SanPhamDAO {
 
     public SanPham getID(String id) {
         String sql = "SELECT * FROM SanPham WHERE maSP=?";
-        List<SanPham> list = getData(sql, id);
-        return list.get(0);
+        List<SanPham> list = getData(sql, new String[]{id});
+        if (!list.isEmpty()) {
+            return list.get(0);
+        }
+        return null; // Trả về null nếu không tìm thấy sản phẩm với mã được cung cấp
     }
 
     @SuppressLint("Range")

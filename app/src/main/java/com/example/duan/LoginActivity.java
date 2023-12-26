@@ -3,7 +3,7 @@ package com.example.duan;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Context;
+
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -53,14 +53,14 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    public void rememberUser(int id,String u, String p, boolean status) {
+    public void rememberUser(int id, String u, String p, boolean status) {
         SharedPreferences pref = getSharedPreferences("USER_FILE", MODE_PRIVATE);
         SharedPreferences.Editor edit = pref.edit();
         if (!status) {
             // xoa trang thai luu truoc do
             edit.clear();
         } else {
-            edit.putInt("id",id);
+            edit.putInt("id", id);
             edit.putString("USERNAME", u);
             edit.putString("PASSWORD", p);
             edit.putBoolean("REMEMBER", status);
@@ -68,6 +68,7 @@ public class LoginActivity extends AppCompatActivity {
         // luu lai toan bo du lieu
         edit.commit();
     }
+
     public void rememberUsers(String u, String p, boolean status) {
         SharedPreferences pref = getSharedPreferences("USER_FILE", MODE_PRIVATE);
         SharedPreferences.Editor edit = pref.edit();
@@ -90,28 +91,55 @@ public class LoginActivity extends AppCompatActivity {
         if (strUser.trim().isEmpty() || strPass.trim().isEmpty()) {
             Toast.makeText(this, "Tên đăng nhập hoặc mật khẩu không được bỏ trống", Toast.LENGTH_SHORT).show();
         } else {
-            if (ttdao.checkLogin(strUser, strPass) > 0) {
-                Toast.makeText(getApplicationContext(), "Login thành công", Toast.LENGTH_SHORT).show();
-                rememberUsers(strUser, strPass, chkRememberPass.isChecked());
-
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                intent.putExtra("user", strUser);
-                startActivity(intent);
-                finish();
-            } else {
-                ThanhVien tvlogin = tvdao.checkLogin(strUser, strPass);
-                if (tvlogin != null) {
+            if (ttdao.checkLogins(strUser) > 0 || tvdao.checkLogins(strUser )!= null) {
+                if (ttdao.checkLogin(strUser, strPass) > 0) {
                     Toast.makeText(getApplicationContext(), "Login thành công", Toast.LENGTH_SHORT).show();
-                    rememberUser(tvlogin.getMaTV(),strUser, strPass, chkRememberPass.isChecked());
-                    Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
-                    intent.putExtra("user", tvdao.checkLogin(strUser, strPass).getMaTV());
+                    rememberUsers(strUser, strPass, chkRememberPass.isChecked());
+                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                    intent.putExtra("user", strUser);
                     startActivity(intent);
                     finish();
-                }
-                else {
-                    Toast.makeText(getApplicationContext(), "Login thất bại", Toast.LENGTH_SHORT).show();
-                }
+                } else {
+                        ThanhVien tvlogin = tvdao.checkLogin(strUser, strPass);
+                        if (tvlogin != null) {
+                            Toast.makeText(getApplicationContext(), "Login thành công", Toast.LENGTH_SHORT).show();
+                            rememberUser(tvlogin.getMaTV(), strUser, strPass, chkRememberPass.isChecked());
+                            Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+                            intent.putExtra("user", tvdao.checkLogin(strUser, strPass).getMaTV());
+                            startActivity(intent);
+                            finish();
+                        } else {
+                            Toast.makeText(getApplicationContext(), "Vui lòng nhập lại mật khẩu", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+            } else {
+                Toast.makeText(this, "Tài khoản không tồn tại", Toast.LENGTH_SHORT).show();
             }
+//            if (ttdao.checkLogin(strUser, strPass) > 0) {
+//                Toast.makeText(getApplicationContext(), "Login thành công", Toast.LENGTH_SHORT).show();
+//                rememberUsers(strUser, strPass, chkRememberPass.isChecked());
+//                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+//                intent.putExtra("user", strUser);
+//                startActivity(intent);
+//                finish();
+//            } else {
+//                ThanhVien tvlogin = tvdao.checkLogin(strUser, strPass);
+//                if (tvlogin != null) {
+//                    Toast.makeText(getApplicationContext(), "Login thành công", Toast.LENGTH_SHORT).show();
+//                    rememberUser(tvlogin.getMaTV(),strUser, strPass, chkRememberPass.isChecked());
+//                    Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+//                    intent.putExtra("user", tvdao.checkLogin(strUser, strPass).getMaTV());
+//                    startActivity(intent);
+//                    finish();
+//                }
+//                else {
+//                    Toast.makeText(getApplicationContext(), "Login thất bại", Toast.LENGTH_SHORT).show();
+//                }
+//            }
         }
+    }
+    public void checkTaiKhoan(){
+
     }
 }

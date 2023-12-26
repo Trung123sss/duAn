@@ -44,7 +44,6 @@ public class HoadonchitietAdapter extends ArrayAdapter<Hoadonchitiet> {
             tvSoLuong = v.findViewById(R.id.tvSoLuong);
             tvGia = v.findViewById(R.id.tvGia);
             tvSanPham.setText(sanPham.getTenSp());
-
             tvSoLuong.setText("Số lượng: " +item.getSoLuong());
             tvGia.setText(String.valueOf(item.getSoLuong() * sanPham.getGia()));
         }

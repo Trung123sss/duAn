@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.example.duan.DTO.HoaDon;
 import com.example.duan.DTO.Hoadonchitiet;
+import com.example.duan.DTO.SanPham;
 import com.example.duan.Database.DbHelper;
 
 import java.util.ArrayList;
@@ -27,22 +28,13 @@ public class HoadonchitietDAO {
         return db.insert("Hoadonchitiet", null, values);
     }
 
-    public long update(Hoadonchitiet obj) {
-        ContentValues values = new ContentValues();
-        values.put("maSP", obj.getMaSP());
-        values.put("soLuong", obj.getSoLuong());
-        return db.update("Hoadonchitiet", values, "ID = ?", new String[]{String.valueOf(obj.getID())});
-    }
-
-    public long delete(String id) {
-        return db.delete("Hoadonchitiet", "ID = ?", new String[]{String.valueOf(id)});
-    }
 
     public List<Hoadonchitiet> getID(int id) {
         String sql = "SELECT * FROM Hoadonchitiet  where ID  = ?" ;
         List<Hoadonchitiet> list = getData(sql, String.valueOf(id));
         return list;
     }
+
 
     @SuppressLint("Range")
     private List<Hoadonchitiet> getData(String sql, String... selectionArgs) {

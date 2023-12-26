@@ -53,6 +53,7 @@ public class TheLoaiAdapter  extends ArrayAdapter<theLoai> {
             public void onClick(View v) {
                 // gọi phương thức xóa
                 fragment.xoa(String.valueOf(item.getMaTT()));
+
             }
         });
         return v;

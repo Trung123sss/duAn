@@ -49,11 +49,11 @@ public class SanPhamnvAdapter extends ArrayAdapter<SanPham> {
             tvMaSP = v.findViewById(R.id.tvMaSP);
             tvMaSP.setText("Mã Sản Phẩm: " + item.getMaSP());
             tvTenSP = v.findViewById(R.id.tvTenSanPham);
-            tvTenSP.setText("Tên sách: " + item.getTenSp());
+            tvTenSP.setText("Tên sản phẩm: " + item.getTenSp());
             tvGiaThue = v.findViewById(R.id.tvGiaThue);
             tvGiaThue.setText("Giá : " + item.getGia());
             tvLoai = v.findViewById(R.id.tvLoai);
-            tvLoai.setText("Loại sách: " + loai.getTenSanPham());
+            tvLoai.setText("Loại sản phẩm: " + loai.getTenSanPham());
             tvsoLuong = v.findViewById(R.id.tvsoLuong);
             tvsoLuong.setText("Số lượng: "+item.getSoLuong());
             tvmoTa = v.findViewById(R.id.tvmoTa);

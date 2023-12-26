@@ -67,6 +67,7 @@ public class HoadonAdapter extends ArrayAdapter<HoaDon> {
             public void onClick(View v) {
                 // Perform delete operation
                 fragment.xoa(String.valueOf(item.getMaHD()));
+
             }
         });
 
