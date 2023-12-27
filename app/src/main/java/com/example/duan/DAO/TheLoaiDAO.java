@@ -21,9 +21,16 @@ public class TheLoaiDAO {
     }
 
     public long insert(theLoai obj) {
-        ContentValues values = new ContentValues();
-        values.put("tenSanPham", obj.getTenSanPham());
-        return db.insert("Loai", null, values);
+        int kq = -1;
+        byte[] hinhAnh = obj.getAnh();
+
+
+            ContentValues values = new ContentValues();
+            values.put("tenSanPham", obj.getTenSanPham());
+            values.put("anh", hinhAnh);
+            return  db.insert("Loai", null, values);
+
+
     }
 
     public long update(theLoai obj) {
@@ -59,7 +66,8 @@ public class TheLoaiDAO {
             theLoai obj = new theLoai();
             obj.setMaTT(Integer.parseInt(cursor.getString(cursor.getColumnIndex("maTT"))));
             obj.setTenSanPham(cursor.getString(cursor.getColumnIndex("tenSanPham")));
-
+            byte[] hinhAnh = cursor.getBlob(cursor.getColumnIndex("anh"));
+            obj.setAnh(hinhAnh);
             list.add(obj);
         }
         return list;

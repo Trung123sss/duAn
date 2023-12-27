@@ -1,10 +1,13 @@
 package com.example.duan.Adapter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -21,6 +24,9 @@ public class TheLoainvAdapter extends ArrayAdapter<theLoai> {
     Fragment_the_loai_nv fragment;
     private ArrayList<theLoai> list;
     TextView tvMaLoai, tvTenLoai;
+    ImageView imageView;
+    Bitmap img;
+    byte[] hinhanh;
 
     public TheLoainvAdapter(@NonNull Context context, Fragment_the_loai_nv fragment, ArrayList<theLoai> list) {
         super(context, 0, list);
@@ -43,6 +49,11 @@ public class TheLoainvAdapter extends ArrayAdapter<theLoai> {
             tvMaLoai.setText("Mã Loại: " + item.getMaTT());
             tvTenLoai = v.findViewById(R.id.tvTenLoai);
             tvTenLoai.setText("Tên Loại: " + item.getTenSanPham());
+            imageView = v.findViewById(R.id.imganh);
+            hinhanh = item.getAnh();
+            img = BitmapFactory.decodeByteArray(hinhanh, 0, hinhanh.length);
+            imageView.setImageBitmap(img);
+
         }
         return v;
     }

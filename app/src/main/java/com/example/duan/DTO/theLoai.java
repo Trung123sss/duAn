@@ -3,6 +3,15 @@ package com.example.duan.DTO;
 public class theLoai {
     private int maTT;
     private String tenSanPham;
+    private byte[] anh;
+
+    public byte[] getAnh() {
+        return anh;
+    }
+
+    public void setAnh(byte[] anh) {
+        this.anh = anh;
+    }
 
     public int getMaTT() {
         return maTT;

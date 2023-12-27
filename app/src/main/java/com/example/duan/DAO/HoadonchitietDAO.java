@@ -27,6 +27,12 @@ public class HoadonchitietDAO {
         values.put("soLuong", obj.getSoLuong());
         return db.insert("Hoadonchitiet", null, values);
     }
+    public long update(Hoadonchitiet obj){
+        ContentValues values = new ContentValues();
+        values.put("maSP", obj.getMaSP());
+        values.put("soLuong", obj.getSoLuong());
+        return db.update("Hoadonchitiet", values, "ID = ?", new String[]{String.valueOf(obj.getMaSP())});
+    }
 
 
     public List<Hoadonchitiet> getID(int id) {

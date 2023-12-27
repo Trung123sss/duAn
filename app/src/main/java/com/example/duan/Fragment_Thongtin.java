@@ -36,7 +36,6 @@ public class Fragment_Thongtin extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_thong_tin, container, false);
         edTenTV = v.findViewById(R.id.edTenTVs);
         edNamSinh = v.findViewById(R.id.edNamSinhs);
@@ -44,8 +43,6 @@ public class Fragment_Thongtin extends Fragment {
         edMatKhau = v.findViewById(R.id.edMatKhaus);
         dao = new ThanhVienDAO(getActivity());
         list = new ArrayList<>();
-        // Lấy đối tượng ThanhVien từ danh sách list hoặc từ nguồn dữ liệu khác
-
         capNhatLv();
         return v;
     }

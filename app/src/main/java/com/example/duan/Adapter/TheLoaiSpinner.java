@@ -39,7 +39,6 @@ public class TheLoaiSpinner extends ArrayAdapter<theLoai> {
         if (item != null) {
             tvMaLoaiSach = v.findViewById(R.id.tvMaLoaiSP);
             tvMaLoaiSach.setText(item.getMaTT() + ". ");
-
             tvTenLoaiSach = v.findViewById(R.id.tvTenLoaiSp);
             tvTenLoaiSach.setText(item.getTenSanPham());
         }

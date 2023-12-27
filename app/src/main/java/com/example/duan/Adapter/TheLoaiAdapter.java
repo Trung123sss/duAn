@@ -1,6 +1,8 @@
 package com.example.duan.Adapter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +24,9 @@ public class TheLoaiAdapter  extends ArrayAdapter<theLoai> {
     Fragment_The_loai fragment;
     private ArrayList<theLoai> list;
     TextView tvMaLoai, tvTenLoai;
-    ImageView imgDel;
+    ImageView imgDel, imageView;
+    Bitmap img;
+    byte[] hinhanh;
     public TheLoaiAdapter(@NonNull Context context, Fragment_The_loai fragment, ArrayList<theLoai> list) {
         super(context, 0, list);
         this.context = context;
@@ -45,6 +49,16 @@ public class TheLoaiAdapter  extends ArrayAdapter<theLoai> {
             tvTenLoai = v.findViewById(R.id.tvTenLoai);
             tvTenLoai.setText("Tên Loại: " + item.getTenSanPham());
             imgDel = v.findViewById(R.id.imgDeleteLS);
+            imageView = v.findViewById(R.id.imganh);
+            byte[] hinhanh = item.getAnh(); // Assuming 'getAnh()' returns a byte array of the image
+            if (hinhanh != null) {
+                Bitmap img = BitmapFactory.decodeByteArray(hinhanh, 0, hinhanh.length);
+                imageView.setImageBitmap(img);
+            } else {
+                // Set a default image if no image is available
+                Bitmap defaultImg = BitmapFactory.decodeResource(context.getResources(), R.drawable.theloai);
+                imageView.setImageBitmap(defaultImg);
+            }
 
         }
 

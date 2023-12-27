@@ -1,20 +1,36 @@
 package com.example.duan;
 
+import static android.app.Activity.RESULT_OK;
+
+
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.duan.Adapter.TheLoaiAdapter;
@@ -22,6 +38,7 @@ import com.example.duan.DAO.TheLoaiDAO;
 import com.example.duan.DTO.theLoai;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 
 public class Fragment_The_loai extends Fragment {
@@ -33,11 +50,14 @@ public class Fragment_The_loai extends Fragment {
     FloatingActionButton fab;
     Dialog dialog;
     EditText edMaLoai, edTenLoai;
-    Button btnSave, btnCancel;
+    Button btnSave, btnCancel, btnThemanh;
     SearchView searchView;
+    private static final int PICK_IMAGE_REQUEST = 1;
+    ImageView imgTheLoai;
+    Bitmap bitmap;
 
     public Fragment_The_loai() {
-        // Required empty public constructor
+
     }
 
 
@@ -130,14 +150,25 @@ public class Fragment_The_loai extends Fragment {
         edMaLoai = dialog.findViewById(R.id.edMaLoai);
         edTenLoai = dialog.findViewById(R.id.edTenLoai);
         btnCancel = dialog.findViewById(R.id.btnCancelLS);
+        imgTheLoai = dialog.findViewById(R.id.imgViewMonAn);
         btnSave = dialog.findViewById(R.id.btnSaveLS);
+        btnThemanh = dialog.findViewById(R.id.btnThemAnh);
 
         edMaLoai.setEnabled(false);
+        btnThemanh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(intent, PICK_IMAGE_REQUEST);
+            }
+        });
+
         if (type != 0) {
             edMaLoai.setText(String.valueOf(item.getMaTT()));
             edTenLoai.setText(item.getTenSanPham());
 
         }
+
         btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -150,6 +181,10 @@ public class Fragment_The_loai extends Fragment {
             public void onClick(View v) {
                 item = new theLoai();
                 item.setTenSanPham(edTenLoai.getText().toString());
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                byte[] byteArray = stream.toByteArray();
+                item.setAnh(byteArray);
                 if (validate() > 0) {
                     if (type == 0) {
                         if (dao.insert(item) > 0) {
@@ -175,12 +210,26 @@ public class Fragment_The_loai extends Fragment {
 
     public int validate() {
         int check = 1;
-        if (edTenLoai.getText().length() == 0 ) {
+        if (edTenLoai.getText().length() == 0 || bitmap == null) {
             Toast.makeText(getContext(), "Bạn phải nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show();
             check = -1;
 
         }
         return check;
+    }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == PICK_IMAGE_REQUEST && data != null) {
+            Uri selectedImageUri = data.getData();
+
+            try {
+                bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), selectedImageUri);
+                imgTheLoai.setImageBitmap(bitmap);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

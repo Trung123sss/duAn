@@ -23,6 +23,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.fragment.app.Fragment;
 
 import com.example.duan.Adapter.HoadonAdapter;
@@ -67,7 +68,7 @@ public class Fragment_Hoa_don extends Fragment {
 
     ArrayList<Hoadonchitiet> listHDCT;
 
-
+    Hoadonchitiet hoadonchitiet;
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
 
 
@@ -251,7 +252,6 @@ public class Fragment_Hoa_don extends Fragment {
                     } else if (chkXuat.isChecked()) {
                         item.setLoai(chkXuat.getText().toString());
                     }
-
                     if (type == 0) {
                         if (hoaDonDAO.insert(item) > 0) {
                             int idNew = hoaDonDAO.idNew();
@@ -271,21 +271,25 @@ public class Fragment_Hoa_don extends Fragment {
                                 sanPhamDAO.updateSL(sanPham);
                                 hdct.setID(idNew);
                                 hoadonchitietDAO.insert(hdct);
-
                             }
                             Toast.makeText(context, "Thêm thành công", Toast.LENGTH_SHORT).show();
+                            String title = "Thêm thành công";
+                            String message = "Bạn đã thêm hóa đơn" + item.getLoai() + " thành công !!!";
+                            int id = item.getMaHD();
+                            Notify createNotification = new Notify();
+                            createNotification.postNotification(context, title, message, id);
                         } else {
                             Toast.makeText(context, "Thêm thất bại", Toast.LENGTH_SHORT).show();
                         }
                     } else {
                         item.setMaHD(Integer.parseInt(edMaHD.getText().toString()));
                         if (hoaDonDAO.update(item) > 0) {
+
                             Toast.makeText(context, "Sửa thành công", Toast.LENGTH_SHORT).show();
                         } else {
                             Toast.makeText(context, "Sửa thất bại", Toast.LENGTH_SHORT).show();
                         }
                     }
-
                     capNhatLv();
                     dialog.dismiss();
                 }
@@ -409,7 +413,6 @@ public class Fragment_Hoa_don extends Fragment {
         dialogThem.show();
     }
 
-
     public int validate() {
         int check = 1;
         if (edngay.getText().length() == 0) {
@@ -435,6 +438,4 @@ public class Fragment_Hoa_don extends Fragment {
         adapter = new HoadonAdapter(getActivity(), this, list);
         lvHoaDon.setAdapter(adapter);
     }
-
-
 }
