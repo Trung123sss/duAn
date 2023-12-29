@@ -65,7 +65,7 @@ public class SanPhamDAO {
         if (!list.isEmpty()) {
             return list.get(0);
         }
-        return null; // Trả về null nếu không tìm thấy sản phẩm với mã được cung cấp
+        return null;
     }
 
     @SuppressLint("Range")

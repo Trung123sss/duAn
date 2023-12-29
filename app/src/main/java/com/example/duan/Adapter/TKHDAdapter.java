@@ -24,7 +24,7 @@ public class TKHDAdapter extends ArrayAdapter<HoaDon> {
     private Context context;
     Fragment_Xuat fragment;
     private ArrayList<HoaDon> list;
-    TextView tvId,tvNhanVienTao, tvNgay,tvTrangThai;
+    TextView tvMaHD,tvTenTV, tvNgay,tvLoai;
 
     public TKHDAdapter(@NonNull Context context, Fragment_Xuat fragment, ArrayList<HoaDon>  list) {
         super(context, 0, list);
@@ -32,7 +32,6 @@ public class TKHDAdapter extends ArrayAdapter<HoaDon> {
         this.list = list;
         this.fragment = fragment;
     }
-
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
@@ -43,21 +42,17 @@ public class TKHDAdapter extends ArrayAdapter<HoaDon> {
         }
         final HoaDon item = list.get(position);
         if (item != null) {
-            tvId = v.findViewById(R.id.tvMaHD);
-            tvNhanVienTao = v.findViewById(R.id.tvTenthanhvien);
-            tvNgay = v.findViewById(R.id.tvNgay);
-            tvTrangThai = v.findViewById(R.id.tvloai);
-
             ThanhVienDAO thanhVienDAO = new ThanhVienDAO(context);
-            HoadonchitietDAO hoaDonChiTietDAO = new HoadonchitietDAO(context);
-            ThanhVien thanhVien = thanhVienDAO.getIDS(item.getMaTV());
-            tvId.setText("Mã hóa đơn: " + item.getMaHD());
-            tvNhanVienTao.setText("Nhân viên tạo: "+ thanhVien);
-            tvTrangThai.setText("Loại" + item.getLoai().toString());
-            tvNgay.setText("Ngày Tạo: "+ item.getNgay().toString() );
-
+            ThanhVien thanhVien = thanhVienDAO.getID(item.getMaTV());
+            tvMaHD = v.findViewById(R.id.tvMaHD);
+            tvMaHD.setText("Mã hóa đơn: " + item.getMaHD());
+            tvTenTV = v.findViewById(R.id.tvTenthanhvien);
+            tvTenTV.setText("Tên người tạo: " + thanhVien.getHoTen());
+            tvLoai = v.findViewById(R.id.tvloai);
+            tvLoai.setText("Loại: " + item.getLoai());
+            tvNgay = v.findViewById(R.id.tvNgay);
+            tvNgay.setText("Ngày: " + item.getNgay());
         }
-
         return v;
     }
 }

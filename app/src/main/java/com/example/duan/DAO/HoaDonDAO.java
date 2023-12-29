@@ -5,6 +5,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import com.example.duan.DTO.HoaDon;
 
@@ -54,6 +55,7 @@ public class HoaDonDAO {
         List<HoaDon> list = getData(sql, id);
         return list.get(0);
     }
+
     public int idNew() {
         int id = -1;
         try {
@@ -85,5 +87,54 @@ public class HoaDonDAO {
             list.add(obj);
         }
         return list;
+    }
+
+    //    @SuppressLint("Range")
+    public List<HoaDon> getBYXUAT(String ngay, String loai) {
+        List<HoaDon> hoaDons = new ArrayList<>();
+        loai = "Nhập";
+
+
+        // Câu lệnh SQL SELECT
+        String selectQuery = "SELECT * FROM Hoadon WHERE ngay = ? AND loai = ?";
+
+        // Thực hiện truy vấn sử dụng rawQuery và cung cấp giá trị thay thế cho các dấu "?"
+        Cursor cursor = db.rawQuery(selectQuery, new String[]{ngay, loai});
+
+        // Xử lý kết quả trả về từ truy vấn
+        if (cursor.moveToFirst()) {
+            do {
+                HoaDon hoaDon = new HoaDon();
+                hoaDon.setMaHD(cursor.getInt(cursor.getColumnIndex("MaHD")));
+                hoaDon.setMaTV(cursor.getInt(cursor.getColumnIndex("maTV")));
+                hoaDon.setNgay(cursor.getString(cursor.getColumnIndex("ngay")));
+                hoaDon.setLoai(cursor.getString(cursor.getColumnIndex("loai")));
+
+                // Thêm hoá đơn vào danh sách
+                hoaDons.add(hoaDon);
+            } while (cursor.moveToNext());
+        }
+
+        Log.d("List", "Size: " + hoaDons.size());
+
+
+        return hoaDons;
+    }
+
+
+
+    public int getSoHoaDon(String ngay) {
+        int tongHoaDon = 0;
+        try {
+            String sql = "SELECT COUNT(*) FROM Hoadon WHERE ngay = ?";
+            Cursor cursor = db.rawQuery(sql, new String[]{ngay});
+            if (cursor.moveToFirst()) {
+                tongHoaDon = cursor.getInt(0);
+            }
+            cursor.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return tongHoaDon;
     }
 }

@@ -71,7 +71,7 @@
         android:text="Tổng số hóa đơn:"
         android:layout_marginTop="20dp"/>
     <ListView
-        android:id="@+id/lvHoaDon"
+        android:id="@+id/lvHoaDons"
         android:layout_width="match_parent"
         android:layout_marginTop="10dp"
         android:layout_height="match_parent"/>

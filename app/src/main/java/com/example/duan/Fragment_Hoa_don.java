@@ -223,9 +223,9 @@ public class Fragment_Hoa_don extends Fragment {
         if (type != 0) {
             edMaHD.setText(String.valueOf(item.getMaHD()));
             edngay.setText(item.getNgay());
-            if (item.getLoai().equals(chkNhap.getText().toString())) {
+            if (item.getLoai().equals("0")) {
                 chkNhap.setChecked(true);
-            } else if (item.getLoai().equals(chkXuat.getText().toString())) {
+            } else if (item.getLoai().equals("1")) {
                 chkXuat.setChecked(true);
             }
             hoadonchitietDAO = new HoadonchitietDAO(context);
@@ -248,9 +248,9 @@ public class Fragment_Hoa_don extends Fragment {
                     }
                     item.setNgay(edngay.getText().toString());
                     if (chkNhap.isChecked()) {
-                        item.setLoai(chkNhap.getText().toString());
+                        item.setLoai("0");
                     } else if (chkXuat.isChecked()) {
-                        item.setLoai(chkXuat.getText().toString());
+                        item.setLoai("1");
                     }
                     if (type == 0) {
                         if (hoaDonDAO.insert(item) > 0) {
@@ -263,7 +263,7 @@ public class Fragment_Hoa_don extends Fragment {
                                 } else if (chkXuat.isChecked()) {
                                     if (sanPham.getSoLuong() < hdct.getSoLuong()) {
                                         Toast.makeText(context, "Kho không đủ hảng", Toast.LENGTH_SHORT).show();
-
+                                        return;
                                     } else {
                                         sanPham.setSoLuong(sanPham.getSoLuong() - hdct.getSoLuong());
                                     }
