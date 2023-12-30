@@ -45,15 +45,16 @@ public class HoadonchitietDAO {
     }
 
 
-    public int getdoanhthu(String tuNgay, String denNgay) {
+    public int getdoanhthu(String tuNgay, String denNgay, String loai) {
         int tongTien = 0;
         try {
             String sql = "SELECT SUM(SanPham.gia * Hoadonchitiet.soLuong) " +
                     "FROM Hoadonchitiet " +
                     "JOIN SanPham ON Hoadonchitiet.maSP = SanPham.maSP " +
                     "JOIN Hoadon ON Hoadonchitiet.ID = Hoadon.MaHD " +
-                    "WHERE Hoadon.ngay BETWEEN ? AND ?";
-            Cursor cursor = db.rawQuery(sql, new String[]{tuNgay,denNgay});
+                    "WHERE Hoadon.ngay BETWEEN ? AND ? " +
+                    "AND Hoadon.loai = ?";
+            Cursor cursor = db.rawQuery(sql, new String[]{tuNgay,denNgay, loai});
             if (cursor.moveToFirst()) {
                 tongTien = cursor.getInt(0);}
         } catch (Exception e) {

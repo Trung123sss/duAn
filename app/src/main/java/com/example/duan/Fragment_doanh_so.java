@@ -24,7 +24,7 @@ import java.util.GregorianCalendar;
 public class Fragment_doanh_so extends Fragment {
     Button btnDoanhThu;
 
-    Button btnTuNgay, btnDenNgay;
+    Button btnTuNgay, btnDenNgay, btnChi;
     EditText edTuNgay, edDenNgay;
     TextView tvDoanhThu;
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
@@ -45,6 +45,7 @@ public class Fragment_doanh_so extends Fragment {
         btnTuNgay = view.findViewById(R.id.btnTuNgayDT);
         btnDenNgay = view.findViewById(R.id.btnDenNgayDT);
         btnDoanhThu = view.findViewById(R.id.btnDoanhThu);
+        btnChi = view.findViewById(R.id.btnChi);
         btnTuNgay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -68,14 +69,26 @@ public class Fragment_doanh_so extends Fragment {
                 d.show();
             }
         });
+        btnChi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String tuNgay = edTuNgay.getText().toString();
+                String denNgay = edDenNgay.getText().toString();
+                String loai = "0";
+                HoadonchitietDAO hoaDonChiTietDAO = new HoadonchitietDAO(getContext());
+                tvDoanhThu.setText("Khoản nhập hàng "+hoaDonChiTietDAO.getdoanhthu(tuNgay,denNgay,loai)+ " VND");
+
+            }
+        });
 
         btnDoanhThu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String tuNgay = edTuNgay.getText().toString();
                 String denNgay = edDenNgay.getText().toString();
+                String loai = "1";
                 HoadonchitietDAO hoaDonChiTietDAO = new HoadonchitietDAO(getContext());
-                tvDoanhThu.setText("Doanh Thu: "+hoaDonChiTietDAO.getdoanhthu(tuNgay,denNgay)+ "VND");
+                tvDoanhThu.setText("Doanh Thu: "+hoaDonChiTietDAO.getdoanhthu(tuNgay,denNgay,loai)+ " VND");
             }
         });
     }
