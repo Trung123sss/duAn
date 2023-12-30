@@ -15,6 +15,7 @@ import com.example.duan.DAO.ThanhVienDAO;
 import com.example.duan.DTO.HoaDon;
 import com.example.duan.DTO.Hoadonchitiet;
 import com.example.duan.DTO.ThanhVien;
+import com.example.duan.Fragment_Nhap;
 import com.example.duan.Fragment_Xuat;
 import com.example.duan.R;
 
@@ -23,14 +24,16 @@ import java.util.ArrayList;
 public class TKHDAdapter extends ArrayAdapter<HoaDon> {
     private Context context;
     Fragment_Xuat fragment;
+    Fragment_Nhap fragmentNhap;
     private ArrayList<HoaDon> list;
     TextView tvMaHD,tvTenTV, tvNgay,tvLoai;
 
-    public TKHDAdapter(@NonNull Context context, Fragment_Xuat fragment, ArrayList<HoaDon>  list) {
+    public TKHDAdapter(@NonNull Context context, Fragment_Xuat fragment, ArrayList<HoaDon> list, Fragment_Nhap fragmentNhap) {
         super(context, 0, list);
         this.context = context;
         this.list = list;
         this.fragment = fragment;
+        this.fragmentNhap = fragmentNhap;
     }
     @NonNull
     @Override
@@ -49,7 +52,13 @@ public class TKHDAdapter extends ArrayAdapter<HoaDon> {
             tvTenTV = v.findViewById(R.id.tvTenthanhvien);
             tvTenTV.setText("Tên người tạo: " + thanhVien.getHoTen());
             tvLoai = v.findViewById(R.id.tvloai);
-            tvLoai.setText("Loại: " + item.getLoai());
+            String loai = "";
+            if (item.getLoai().equals("1")) {
+                loai = "Nhập";
+            } else {
+                loai = "Xuất";
+            }
+            tvLoai.setText("Loại: " + loai);
             tvNgay = v.findViewById(R.id.tvNgay);
             tvNgay.setText("Ngày: " + item.getNgay());
         }

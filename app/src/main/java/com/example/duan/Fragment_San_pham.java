@@ -256,7 +256,6 @@ public class Fragment_San_pham extends Fragment {
         }
     }
 
-//tìm kiến
     private void handleSearch(String query) {
         List<SanPham> listSearch = new ArrayList<>();
         for (SanPham sach : list) {
@@ -269,25 +268,20 @@ public class Fragment_San_pham extends Fragment {
 
     }
 
-    // Sắp xếp sách theo tên tăng dần
     private void sortBooksByNameAscending() {
         Collections.sort(list, new Comparator<SanPham>() {
             @Override
-            public int compare(SanPham sach1, SanPham sach2) {
-                return sach1.getTenSp().compareTo(sach2.getTenSp());
-//                return sach1.getGiaThue() - sach2.getGiaThue();
+            public int compare(SanPham sp1, SanPham sp2) {
+                return sp1.getTenSp().compareTo(sp2.getTenSp());
             }
         });
         adapter.notifyDataSetChanged();
     }
-
-    // Sắp xếp sách theo tên giảm dần
     private void sortBooksByNameDescending() {
         Collections.sort(list, new Comparator<SanPham>() {
             @Override
-            public int compare(SanPham sach1, SanPham sach2) {
-                return sach2.getTenSp().compareTo(sach1.getTenSp());
-//                return sach2.getGiaThue() - sach1.getGiaThue();
+            public int compare(SanPham sp1, SanPham sp2) {
+                return sp2.getTenSp().compareTo(sp1.getTenSp());
             }
         });
         adapter.notifyDataSetChanged();

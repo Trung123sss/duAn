@@ -90,18 +90,11 @@ public class HoaDonDAO {
     }
 
     //    @SuppressLint("Range")
+    @SuppressLint("Range")
     public List<HoaDon> getBYXUAT(String ngay, String loai) {
         List<HoaDon> hoaDons = new ArrayList<>();
-        loai = "Nhập";
-
-
-        // Câu lệnh SQL SELECT
         String selectQuery = "SELECT * FROM Hoadon WHERE ngay = ? AND loai = ?";
-
-        // Thực hiện truy vấn sử dụng rawQuery và cung cấp giá trị thay thế cho các dấu "?"
         Cursor cursor = db.rawQuery(selectQuery, new String[]{ngay, loai});
-
-        // Xử lý kết quả trả về từ truy vấn
         if (cursor.moveToFirst()) {
             do {
                 HoaDon hoaDon = new HoaDon();
@@ -110,24 +103,38 @@ public class HoaDonDAO {
                 hoaDon.setNgay(cursor.getString(cursor.getColumnIndex("ngay")));
                 hoaDon.setLoai(cursor.getString(cursor.getColumnIndex("loai")));
 
-                // Thêm hoá đơn vào danh sách
                 hoaDons.add(hoaDon);
             } while (cursor.moveToNext());
         }
+        return hoaDons;
+    }
+    @SuppressLint("Range")
+    public List<HoaDon> getBYTrangThai(String tuNgay, String denNgay, String loai) {
+        List<HoaDon> hoaDons = new ArrayList<>();
+        String selectQuery = "SELECT * FROM Hoadon WHERE ngay BETWEEN ? AND ? AND loai = ?";
+        Cursor cursor = db.rawQuery(selectQuery, new String[]{tuNgay, denNgay, loai});
 
-        Log.d("List", "Size: " + hoaDons.size());
+        if (cursor.moveToFirst()) {
+            do {
+                HoaDon hoaDon = new HoaDon();
+                hoaDon.setMaHD(cursor.getInt(cursor.getColumnIndex("MaHD")));
+                hoaDon.setMaTV(cursor.getInt(cursor.getColumnIndex("maTV")));
+                hoaDon.setNgay(cursor.getString(cursor.getColumnIndex("ngay")));
+                hoaDon.setLoai(cursor.getString(cursor.getColumnIndex("loai")));
+                hoaDons.add(hoaDon);
+            } while (cursor.moveToNext());
+        }
 
 
         return hoaDons;
     }
 
 
-
-    public int getSoHoaDon(String ngay) {
+    public int getSoHoaDon(String ngay , String loai) {
         int tongHoaDon = 0;
         try {
-            String sql = "SELECT COUNT(*) FROM Hoadon WHERE ngay = ?";
-            Cursor cursor = db.rawQuery(sql, new String[]{ngay});
+            String sql = "SELECT COUNT(*) FROM Hoadon WHERE ngay = ? AND loai=?";
+            Cursor cursor = db.rawQuery(sql, new String[]{ngay, loai});
             if (cursor.moveToFirst()) {
                 tongHoaDon = cursor.getInt(0);
             }

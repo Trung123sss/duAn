@@ -51,7 +51,7 @@ public class Fragment_san_pham_nv extends Fragment {
     }
     void capNhatLv() {
         list = (ArrayList<SanPham>) sanPhamDAO.getAll();
-        adapter = new SanPhamnvAdapter(getActivity(), this, list);
+        adapter = new SanPhamnvAdapter(getActivity(), this, list, null);
         lvSanPham.setAdapter(adapter);
     }
 }

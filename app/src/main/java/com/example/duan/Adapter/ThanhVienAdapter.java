@@ -57,7 +57,6 @@ public class ThanhVienAdapter extends ArrayAdapter<ThanhVien> {
         imgDel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//xóa
                 fragment.xoa(String.valueOf(item.getMaTV()));
 
             }

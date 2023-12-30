@@ -58,7 +58,10 @@ public class SanPhamDAO {
         String sql = "SELECT * FROM SanPham";
         return getData(sql);
     }
-
+    public List<SanPham> getAlls() {
+        String sql = "SELECT * FROM SanPham WHERE soLuong > 0";
+        return getData(sql);
+    }
     public SanPham getID(String id) {
         String sql = "SELECT * FROM SanPham WHERE maSP=?";
         List<SanPham> list = getData(sql, new String[]{id});

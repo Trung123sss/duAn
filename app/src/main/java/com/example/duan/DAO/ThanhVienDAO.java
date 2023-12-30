@@ -7,6 +7,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import com.example.duan.DTO.HoaDon;
 import com.example.duan.DTO.ThanhVien;
 import com.example.duan.Database.DbHelper;
 
@@ -49,10 +50,10 @@ public class ThanhVienDAO {
         String sql = "SELECT * FROM ThanhVien";
         return getData(sql);
     }
-    public ThanhVien getIDS(int id) {
-        ThanhVien objNhanVien = new ThanhVien();
+    public List<ThanhVien> getIDS(int id) {
+        List<ThanhVien> thanhViens = new ArrayList<>();
         try {
-            String sql = "SELECT * FROM NhanVien WHERE id = ?";
+            String sql = "SELECT * FROM ThanhVien WHERE maTV=?";
             String[] selectionArgs = { String.valueOf(id) };
 
             Cursor cursor = db.rawQuery(sql, selectionArgs);
@@ -68,7 +69,7 @@ public class ThanhVienDAO {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return objNhanVien;
+        return thanhViens;
     }
 
     public ThanhVien getID(int id) {

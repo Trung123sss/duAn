@@ -16,10 +16,12 @@ import java.util.List;
 
 public class HoadonchitietDAO {
     private SQLiteDatabase db;
+
     public HoadonchitietDAO(Context context) {
         DbHelper dbHelper = new DbHelper(context);
         db = dbHelper.getWritableDatabase();
     }
+
     public long insert(Hoadonchitiet obj) {
         ContentValues values = new ContentValues();
         values.put("ID", obj.getID());
@@ -27,7 +29,8 @@ public class HoadonchitietDAO {
         values.put("soLuong", obj.getSoLuong());
         return db.insert("Hoadonchitiet", null, values);
     }
-    public long update(Hoadonchitiet obj){
+
+    public long update(Hoadonchitiet obj) {
         ContentValues values = new ContentValues();
         values.put("maSP", obj.getMaSP());
         values.put("soLuong", obj.getSoLuong());
@@ -36,9 +39,27 @@ public class HoadonchitietDAO {
 
 
     public List<Hoadonchitiet> getID(int id) {
-        String sql = "SELECT * FROM Hoadonchitiet  where ID  = ?" ;
+        String sql = "SELECT * FROM Hoadonchitiet  where ID  = ?";
         List<Hoadonchitiet> list = getData(sql, String.valueOf(id));
         return list;
+    }
+
+
+    public int getdoanhthu(String tuNgay, String denNgay) {
+        int tongTien = 0;
+        try {
+            String sql = "SELECT SUM(SanPham.gia * Hoadonchitiet.soLuong) " +
+                    "FROM Hoadonchitiet " +
+                    "JOIN SanPham ON Hoadonchitiet.maSP = SanPham.maSP " +
+                    "JOIN Hoadon ON Hoadonchitiet.ID = Hoadon.MaHD " +
+                    "WHERE Hoadon.ngay BETWEEN ? AND ?";
+            Cursor cursor = db.rawQuery(sql, new String[]{tuNgay,denNgay});
+            if (cursor.moveToFirst()) {
+                tongTien = cursor.getInt(0);}
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return tongTien;
     }
 
 

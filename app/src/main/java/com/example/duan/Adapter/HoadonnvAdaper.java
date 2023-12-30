@@ -55,7 +55,13 @@ public class HoadonnvAdaper extends ArrayAdapter<HoaDon> {
             tvTenTV = v.findViewById(R.id.tvTenthanhvien);
             tvTenTV.setText("Tên người tạo: " + thanhVien.getHoTen());
             tvLoai = v.findViewById(R.id.tvloai);
-            tvLoai.setText("Loại: " + item.getLoai());
+            String loai = "";
+            if (item.getLoai().equals("1")) {
+                loai = "Nhập";
+            } else {
+                loai = "Xuất";
+            }
+            tvLoai.setText("Loại: " + loai);
             tvNgay = v.findViewById(R.id.tvNgay);
             tvNgay.setText("Ngày: " + item.getNgay());
 

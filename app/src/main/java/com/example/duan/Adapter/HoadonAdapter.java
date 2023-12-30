@@ -57,7 +57,13 @@ public class HoadonAdapter extends ArrayAdapter<HoaDon> {
                 // Xử lý khi thanhVien là null
             }
             tvLoai = v.findViewById(R.id.tvloai);
-            tvLoai.setText("Loại: " + item.getLoai());
+            String loai = "";
+            if (item.getLoai().equals("1")) {
+                loai = "Nhập";
+            } else {
+                loai = "Xuất";
+            }
+            tvLoai.setText("Loại: " + loai);
             tvNgay = v.findViewById(R.id.tvNgay);
             tvNgay.setText("Ngày: " + item.getNgay());
             imgDel = v.findViewById(R.id.imgDeleteLS);

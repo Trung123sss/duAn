@@ -1,5 +1,8 @@
 package com.example.duan;
 
+import static android.content.Context.MODE_PRIVATE;
+
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -47,18 +50,16 @@ public class Fragment_Thongtin extends Fragment {
         return v;
     }
     void capNhatLv() {
-        list = (ArrayList<ThanhVien>) dao.getAll();
+        ThanhVienDAO thanhVienDAO = new ThanhVienDAO(getActivity());
+        SharedPreferences pref = getActivity().getSharedPreferences("USER_FILE", MODE_PRIVATE);
+        int idUser = pref.getInt("id", 0);
+        ThanhVien loggedInUser = thanhVienDAO.getID(idUser);
         adapter = new ThanhVienAdapter(getActivity(), new Fragment_thanh_vien(), (ArrayList<ThanhVien>) list);
-        // Sử dụng vòng lặp for để lấy từng đối tượng ThanhVien từ danh sách list
-        for (int i = 0; i < list.size(); i++) {
-            ThanhVien thanhVien = list.get(i);
-
-            // Gán dữ liệu từ đối tượng ThanhVien vào các EditText tương ứng
-            edTenTV.setText("Tên thành viên: " +thanhVien.getHoTen());
-            edNamSinh.setText(String.valueOf("Năm sinh: " + thanhVien.getNamSinh()));
-            edTaiKhoan.setText("Tài Khoản: "+thanhVien.getTaiKhoan());
-            edMatKhau.setText("Mật Khẩu "+thanhVien.getMatKhau());
+            edTenTV.setText("Tên thành viên: " +loggedInUser.getHoTen());
+            edNamSinh.setText(String.valueOf("Năm sinh: " + loggedInUser.getNamSinh()));
+            edTaiKhoan.setText("Tài Khoản: "+loggedInUser.getTaiKhoan());
+            edMatKhau.setText("Mật Khẩu "+loggedInUser.getMatKhau());
         }
     }
 
-}
+

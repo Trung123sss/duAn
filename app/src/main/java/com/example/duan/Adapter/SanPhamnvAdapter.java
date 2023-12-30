@@ -14,6 +14,7 @@ import androidx.annotation.Nullable;
 import com.example.duan.DAO.TheLoaiDAO;
 import com.example.duan.DTO.SanPham;
 import com.example.duan.DTO.theLoai;
+import com.example.duan.Fragment_Ton;
 import com.example.duan.Fragment_san_pham_nv;
 import com.example.duan.R;
 
@@ -22,16 +23,18 @@ import java.util.List;
 public class SanPhamnvAdapter extends ArrayAdapter<SanPham> {
     private Context context;
     Fragment_san_pham_nv fragment;
+    Fragment_Ton fragmentTon;
     List<SanPham> list;
 
     TextView tvMaSP, tvTenSP, tvGiaThue, tvLoai, tvsoLuong, tvmoTa;
     ImageView imgDel;
 
-    public SanPhamnvAdapter(@NonNull Context context, Fragment_san_pham_nv fragment, List<SanPham> list) {
+    public SanPhamnvAdapter(@NonNull Context context, Fragment_san_pham_nv fragment, List<SanPham> list, Fragment_Ton fragmentTon) {
         super(context, 0, list);
         this.context = context;
         this.fragment = fragment;
         this.list = list;
+        this.fragmentTon =fragmentTon;
     }
 
     @NonNull

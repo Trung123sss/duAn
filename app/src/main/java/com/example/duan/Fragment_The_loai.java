@@ -153,7 +153,6 @@ public class Fragment_The_loai extends Fragment {
         imgTheLoai = dialog.findViewById(R.id.imgViewMonAn);
         btnSave = dialog.findViewById(R.id.btnSaveLS);
         btnThemanh = dialog.findViewById(R.id.btnThemAnh);
-
         edMaLoai.setEnabled(false);
         btnThemanh.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -179,6 +178,15 @@ public class Fragment_The_loai extends Fragment {
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (edTenLoai.getText().toString().trim().isEmpty()) {
+                    Toast.makeText(context, "Bạn chưa nhập tên loại", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if (bitmap == null) {
+                    Toast.makeText(context, "Bạn chưa chọn ảnh", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 item = new theLoai();
                 item.setTenSanPham(edTenLoai.getText().toString());
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
@@ -208,15 +216,6 @@ public class Fragment_The_loai extends Fragment {
         dialog.show();
     }
 
-    public int validate() {
-        int check = 1;
-        if (edTenLoai.getText().length() == 0 || bitmap == null) {
-            Toast.makeText(getContext(), "Bạn phải nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show();
-            check = -1;
-
-        }
-        return check;
-    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -231,5 +230,14 @@ public class Fragment_The_loai extends Fragment {
                 e.printStackTrace();
             }
         }
+    }
+    public int validate() {
+        int check = 1;
+        if (edTenLoai.getText().length() == 0 || null == bitmap || imgTheLoai == null) {
+            Toast.makeText(getContext(), "Bạn phải nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show();
+            check = -1;
+
+        }
+        return check;
     }
 }

@@ -72,5 +72,24 @@ public class TheLoaiDAO {
         }
         return list;
     }
+    @SuppressLint("Range")
+    public String getTON(String tenSanPham) {
+        String soLuongTong = "0";
+        String sql = "SELECT Loai.tenSanPham, SUM(SanPham.soLuong) AS soLuongTong " +
+                "FROM SanPham " +
+                "INNER JOIN Loai ON SanPham.maTT = Loai.maTT " +
+                "GROUP BY Loai.tenSanPham";
+                Cursor cursor = db.rawQuery(sql, new String[]{tenSanPham});
+                if (cursor.moveToFirst()) {
+                    theLoai theLoai = new theLoai();
+                    theLoai.setTenSanPham(String.valueOf(cursor.getInt(cursor.getColumnIndex("tenSanPham"))));
+                    soLuongTong = String.valueOf(cursor.getInt(0));
+                }
+                cursor.close();
+
+            return soLuongTong;
+
+        }
+
 
 }
