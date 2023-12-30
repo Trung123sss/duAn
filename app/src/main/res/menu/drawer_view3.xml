@@ -12,7 +12,18 @@
             android:icon="@drawable/th"
             android:title="Thể Loại"/>
 
-
+        <item android:title="Thống kê">
+            <menu>
+                <item android:id="@+id/sub_Top"
+                    android:icon="@drawable/ic_top"
+                    android:title="Hóa đơn"
+                    />
+                <item android:id="@+id/sub_DoanhThu"
+                    android:icon="@drawable/ic_money"
+                    android:title="Doanh số"
+                    />
+            </menu>
+        </item>
 
 
         <item android:title="Người dùng">

@@ -128,13 +128,25 @@ public class HoaDonDAO {
 
         return hoaDons;
     }
-
-
     public int getSoHoaDon(String ngay , String loai) {
         int tongHoaDon = 0;
         try {
             String sql = "SELECT COUNT(*) FROM Hoadon WHERE ngay = ? AND loai=?";
             Cursor cursor = db.rawQuery(sql, new String[]{ngay, loai});
+            if (cursor.moveToFirst()) {
+                tongHoaDon = cursor.getInt(0);
+            }
+            cursor.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return tongHoaDon;
+    }
+    public int getSoHoaDons(String ngay, String ngayden , String loai) {
+        int tongHoaDon = 0;
+        try {
+            String sql = "SELECT COUNT(*) FROM Hoadon WHERE ngay BETWEEN ? AND ? AND loai=?";
+            Cursor cursor = db.rawQuery(sql, new String[]{ngay, ngayden, loai});
             if (cursor.moveToFirst()) {
                 tongHoaDon = cursor.getInt(0);
             }

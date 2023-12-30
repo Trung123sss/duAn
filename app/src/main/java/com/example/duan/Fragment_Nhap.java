@@ -12,15 +12,20 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import com.example.duan.Adapter.TKHDAdapter;
 import com.example.duan.DAO.HoaDonDAO;
 import com.example.duan.DTO.HoaDon;
+
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 
 public class Fragment_Nhap extends Fragment {
@@ -91,6 +96,20 @@ public class Fragment_Nhap extends Fragment {
 
             @Override
             public void afterTextChanged(Editable editable) {
+                String ngaynhap = edNgay.getText().toString();
+                String ngayden = eddenngay.getText().toString();
+                try {
+                    Date dateBatDau = sdf.parse(ngaynhap);
+                    Date dateKetThuc = sdf.parse(ngayden);
+                    if (dateBatDau.after(dateKetThuc)) {
+                        Toast.makeText(getContext(), "Ngày nhập phải lớn ngày kết thúc", Toast.LENGTH_SHORT).show();
+                    }
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                    Toast.makeText(getContext(), "Ngày không đúng định dạng", Toast.LENGTH_SHORT).show();
+                }
+                tvhoadon.setText("Tổng số hóa đơn: " + String.valueOf(dao.getSoHoaDons(ngaynhap,ngayden,loais)));
+
                 capNhatLvs();
             }
         });

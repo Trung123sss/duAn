@@ -20,13 +20,10 @@ public class MyAdapter extends FragmentStateAdapter {
     public Fragment createFragment(int position) {
         switch (position){
             case 0:
-
                 return new Fragment_Xuat();
 
             case 1:
-
                 return new Fragment_Ton();
-
             default:
                 return new Fragment_Nhap();
 

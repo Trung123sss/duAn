@@ -11,7 +11,7 @@
         android:layout_marginLeft="39dp"
         android:text="Thống kê hóa đơn nhập"
         android:textColor="#F40E0E"
-        android:textSize="29dp"
+        android:textSize="32dp"
         android:textStyle="bold" />
 
     <LinearLayout
@@ -90,6 +90,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="30dp"
+        android:layout_marginLeft="20dp"
         android:textColor="@color/black"
         android:textStyle="bold"
         android:text="Tổng số hóa đơn:"

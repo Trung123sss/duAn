@@ -92,6 +92,15 @@ public class HomeActivity extends AppCompatActivity {
                 setTitle("Thông tin cá nhân");
                 Fragment_Thongtin frtthongtinnv = new Fragment_Thongtin();
                 replaceFrg(frtthongtinnv);
+            } else if (id == R.id.sub_Top) {
+                setTitle("Thông kê hóa đơn");
+                Fragment_TK frtop = new Fragment_TK();
+                replaceFrg(frtop);
+
+            } else if (id == R.id.sub_DoanhThu) {
+                setTitle("Doanh số");
+                Fragment_doanh_so frdoanhthu = new Fragment_doanh_so();
+                replaceFrg(frdoanhthu);
 
 
 

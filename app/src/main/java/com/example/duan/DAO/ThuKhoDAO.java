@@ -38,7 +38,6 @@ public class ThuKhoDAO {
         return list.get(0);
     }
 
-    // check login
     public int checkLogin(String id, String password) {
         String sql = "SELECT * FROM ThuKho WHERE maTT=? AND matKhau=?";
         List<ThuKho> list = getData(sql, id, password);

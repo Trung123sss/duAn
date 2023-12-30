@@ -50,27 +50,6 @@ public class ThanhVienDAO {
         String sql = "SELECT * FROM ThanhVien";
         return getData(sql);
     }
-    public List<ThanhVien> getIDS(int id) {
-        List<ThanhVien> thanhViens = new ArrayList<>();
-        try {
-            String sql = "SELECT * FROM ThanhVien WHERE maTV=?";
-            String[] selectionArgs = { String.valueOf(id) };
-
-            Cursor cursor = db.rawQuery(sql, selectionArgs);
-            if (cursor.moveToFirst()) {
-                ThanhVien obj = new ThanhVien();
-                obj.setMaTV(Integer.parseInt(cursor.getString(cursor.getColumnIndex("maTV"))));
-                obj.setHoTen(cursor.getString(cursor.getColumnIndex("hoTen")));
-                obj.setNamSinh(cursor.getString(cursor.getColumnIndex("namSinh")));
-                obj.setTaiKhoan(cursor.getString(cursor.getColumnIndex("taiKhoan")));
-                obj.setMatKhau(cursor.getString(cursor.getColumnIndex("matKhau")));
-            }
-            cursor.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return thanhViens;
-    }
 
     public ThanhVien getID(int id) {
         String sql = "SELECT * FROM ThanhVien WHERE maTV=?";
